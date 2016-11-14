@@ -36,7 +36,7 @@ Print the full comment for a specific log entry.
 Print the date and total time for a date. Prints today's stats if no date is included.
 .TP
 .BR \-v\fR
-Edit the current work log in vi(m). Sets 
+Edit the current work log in vi(m). Make sure to set noeol and binary when working with a current row open, or it will write the file with an EOL character, which will move the next finish input to the next row, making things ugly
 .TP
 .SH TODO
 .BR wl.conf
