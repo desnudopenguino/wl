@@ -1,4 +1,4 @@
-#!/bin/ksh -vx
+#!/bin/ksh
 # Time Tracker is a set of functions that can be implemented in ksh to keep
 # track of time spent working on a project. 
 
@@ -301,8 +301,8 @@ else
 fi
 }
 
-# wrapper function wl -<flags> [args...]
-function wl {
+# WRAPPER HERE
+# This part isn't a function, but will execute as one (hopefully) as the shell script is executed. 
 	# if no arguments print out the current log's time, if that log exists
 	if [[ ${#} -eq 0 ]]; then
 		getTime
@@ -368,7 +368,7 @@ function wl {
 					session=$(tmux list-pane -F '#S' | head -1)
 					date=$(date +"%d_%m_%y")
 					filename=~/"work_logs/$session-$date.csv"
-					vi +'set noeol' +'set binary' $filename
+					vim $filename
 				fi
 
 				# (g)et from Box
@@ -416,4 +416,3 @@ function wl {
 		fi
 	fi
 }
-export wl
