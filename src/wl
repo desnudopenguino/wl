@@ -415,4 +415,3 @@ fi
 			echo "First Argument must be a '-' followed by one or more flags"
 		fi
 	fi
-}
