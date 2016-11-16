@@ -10,7 +10,17 @@ all:
 	@echo "Moving wl man page to /usr/local/man/man1/ ..."
 	@cp src/wl.1 /usr/local/man/man1/
 	@echo "Done!"
-clean:
+
+update:
+	@echo getting repo
+	@git pull origin master
+	@doas make
+
+deinstall:
+	@echo "Removing Script"
+	@rm /usr/local/bin/wl
+	@echo "Removing man page"
+	@rm /usr/local/man/man1/wl.1
 	@echo "Removing wl Repository..."
 	@cd ../; rm -rf wl
 	@echo "Done!"
