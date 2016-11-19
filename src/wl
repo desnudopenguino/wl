@@ -303,6 +303,11 @@ fi
 
 # WRAPPER HERE
 # This part isn't a function, but will execute as one (hopefully) as the shell script is executed. 
+	
+	# check if file structure is set up
+	if [[ ! -d "/home/`whoami`/work_logs/.archive" ]]; then
+		mkdir -p ~/work_logs/.archive
+	fi
 	# if no arguments print out the current log's time, if that log exists
 	if [[ ${#} -eq 0 ]]; then
 		getTime
@@ -370,6 +375,13 @@ fi
 					filename=~/"work_logs/$session-$date.csv"
 					vim $filename
 				fi
+
+				# setup (r)emote directory structure
+				if [[ $arg == 'r' ]]; then
+					dir="work_logs"
+					wl_box_setup.expect $dir
+				fi
+
 
 				# (g)et from Box
 				if [[ $arg == 'g' ]]; then
