@@ -19,7 +19,7 @@ update:
 
 deinstall:
 	@echo "Removing Script"
-	@rm /usr/local/bin/wl
+	@rm /usr/local/bin/wl*
 	@echo "Removing man page"
 	@rm /usr/local/man/man1/wl.1
 	@echo "Removing wl Repository..."
