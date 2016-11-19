@@ -1,0 +1,13 @@
+#!/usr/local/bin/expect -f
+
+set dir [lindex $argv 0]
+
+spawn cadaver https://dav.box.com/dav
+expect "dav:/dav/>"
+send "mkdir $dir\n"
+expect "dav:/dav/>"
+send "cd $dir\n"
+expect "dav:/dav/$dir/>"
+send "mkdir .archive\n"
+expect "dav:/dav/$dir/>"
+send "quit\n"
