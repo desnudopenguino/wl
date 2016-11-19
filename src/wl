@@ -381,7 +381,9 @@ fi
 					else
 						filename=$2
 					fi
-					~/dotfiles/scripts/box_down.expect $filename work_logs
+					dir="work_logs"
+					localdir="/home/`whoami`/$dir"
+					box_down.expect $filename $localdir $dir
 					echo "\n"
 				fi
 
@@ -390,7 +392,9 @@ fi
 					session=$(tmux list-pane -F '#S' | head -1)
 					date=$(date +"%d_%m_%y")
 					filename="$session-$date.csv"
-					~/dotfiles/scripts/box_up.expect $filename work_logs
+					dir="work_logs"
+					localdir="/home/`whoami`/$dir"
+					box_up.expect $filename $localdir $dir
 					echo "\n"
 				fi
 
@@ -400,13 +404,15 @@ fi
 					date=$(date +"%d_%m_%y")
 					filename="$session-$date.csv"
 					echo "Archiving $filename..."
-					current=~/"work_logs/$filename"
-					archive=~/"work_logs/.archive/"
+					dir="work_logs"
+					localdir="/home/`whoami`/$dir"
+					current=~/"$dir/$filename"
+					archive=~/"$dir/.archive/"
 					mv $current $archive
-					~/dotfiles/scripts/box_up.expect $filename work_logs/.archive
+					box_up.expect $filename $localdir $dir/.archive
 					echo "Cleaning up other $session logs..."
-					rm -i ~/work_logs/$session*
-					~/dotfiles/scripts/box_delete.expect $session work_logs/
+					rm -i /$localdir/$session*
+					box_delete.expect $session $dir/
 
 					echo "\n"
 				fi
