@@ -383,7 +383,7 @@ fi
 					fi
 					dir="work_logs"
 					localdir="/home/`whoami`/$dir"
-					box_down.expect $filename $localdir $dir
+					wl_box_get.expect $filename $localdir $dir
 					echo "\n"
 				fi
 
@@ -394,7 +394,7 @@ fi
 					filename="$session-$date.csv"
 					dir="work_logs"
 					localdir="/home/`whoami`/$dir"
-					box_up.expect $filename $localdir $dir
+					wl_box_put.expect $filename $localdir $dir
 					echo "\n"
 				fi
 
@@ -409,11 +409,10 @@ fi
 					current=~/"$dir/$filename"
 					archive=~/"$dir/.archive/"
 					mv $current $archive
-					box_up.expect $filename $localdir $dir/.archive
+					wl_box_put.expect $filename $localdir $dir/.archive
 					echo "Cleaning up other $session logs..."
 					rm -i /$localdir/$session*
-					box_delete.expect $session $dir/
-
+					wl_box_delete.expect $session $dir/
 					echo "\n"
 				fi
 			done
