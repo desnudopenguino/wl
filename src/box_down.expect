@@ -1,0 +1,15 @@
+#!/usr/local/bin/expect -f
+
+set upFile [lindex $argv 0]
+set localDir [lindex $argv 1]
+set dir [lindex $argv 2]
+
+spawn cadaver https://dav.box.com/dav
+expect "dav:/dav/>"
+send "lcd $localDir\n"
+expect "dav:/dav/>"
+send "cd $dir\n"
+expect "dav:/dav/$dir/>"
+send "get $upFile $upFile\n"
+expect "dav:/dav/$dir/>"
+send "quit\n"
