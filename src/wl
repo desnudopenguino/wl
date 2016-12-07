@@ -5,7 +5,7 @@
 # create a new log file
 function newLog {
 session=$(tmux list-pane -F '#S' | head -1)
-date=$(date +"%d_%m_%y")
+date=$(date +"%y_%m_%d")
 filename=~/"work_logs/$session-$date.csv"
 touch $filename
 echo "$filename created..."
@@ -33,7 +33,7 @@ export startLog
 
 # append the end time, time worked, and comments to the current work line
 function stopLog {
-date=$(date +"%d_%m_%y")
+date=$(date +"%y_%m_%d")
 end=`calculateQuarter`
 session=$(tmux list-pane -F '#S' | head -1)
 filename=~/"work_logs/$session-$date.csv"
@@ -99,7 +99,7 @@ export calculateQuarter
 # Get the start time from the file
 function getStart {
 session=$(tmux list-pane -F '#S' | head -1)
-date=$(date +"%d_%m_%y")
+date=$(date +"%y_%m_%d")
 filename=~/"work_logs/$session-$date.csv"
 line=$(tail -n 1 $filename)
 set -A arr $line
@@ -114,7 +114,7 @@ if [[ -e $1 ]]; then
 	file=$1
 else
 	session=$(tmux list-pane -F '#S' | head -1)
-	date=$(date +"%d_%m_%y")
+	date=$(date +"%y_%m_%d")
 	file=~/"work_logs/$session-$date.csv"
 fi
 
@@ -202,7 +202,7 @@ if [[ -e $1 ]]; then
 	file=$1
 else
 	session=$(tmux list-pane -F '#S' | head -1)
-	date=$(date +"%d_%m_%y")
+	date=$(date +"%y_%m_%d")
 	file=~/"work_logs/$session-$date.csv"
 fi
 typeset -i hrs mins calc_hrs calc_mins
@@ -239,7 +239,7 @@ if [[ -e $2 ]]; then
 	file=$2
 else
 	session=$(tmux list-pane -F '#S' | head -1)
-	file_date=$(date +"%d_%m_%y")
+	file_date=$(date +"%y_%m_%d")
 	file=~/"work_logs/$session-$file_date.csv"
 fi
 typeset -i hrs mins calc_hrs calc_mins
@@ -295,7 +295,7 @@ if [[ -z $1 ]]; then
 	echo "Choose an entry number, dangus!"
 else
 	session=$(tmux list-pane -F '#S' | head -1)
-	date=$(date +"%d_%m_%y")
+	date=$(date +"%y_%m_%d")
 	filename=~/"work_logs/$session-$date.csv"
 	sed -n $1p $filename
 fi
@@ -371,7 +371,7 @@ fi
 				# edit it!
 				if [[ $arg == 'v' ]]; then
 					session=$(tmux list-pane -F '#S' | head -1)
-					date=$(date +"%d_%m_%y")
+					date=$(date +"%y_%m_%d")
 					filename=~/"work_logs/$session-$date.csv"
 					vim $filename
 				fi
@@ -388,7 +388,7 @@ fi
 					echo "Get from Box"
 					if [[ $# -lt 2 ]]; then
 						session=$(tmux list-pane -F '#S' | head -1)
-						date=$(date +"%d_%m_%y")
+						date=$(date +"%y_%m_%d")
 						filename="$session-$date.csv"
 					else
 						filename=$2
@@ -402,7 +402,7 @@ fi
 				# (p)ush to Box
 				if [[ $arg == 'p' ]]; then
 					session=$(tmux list-pane -F '#S' | head -1)
-					date=$(date +"%d_%m_%y")
+					date=$(date +"%y_%m_%d")
 					filename="$session-$date.csv"
 					dir="work_logs"
 					localdir="/home/`whoami`/$dir"
@@ -413,7 +413,7 @@ fi
 				# (a)rchive - add files to work_logs/.archive directory
 				if [[ $arg == 'a' ]]; then
 					session=$(tmux list-pane -F '#S' | head -1)
-					date=$(date +"%d_%m_%y")
+					date=$(date +"%y_%m_%d")
 					filename="$session-$date.csv"
 					echo "Archiving $filename..."
 					dir="work_logs"
