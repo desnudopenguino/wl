@@ -373,7 +373,6 @@ else
         wl_box_setup.expect $dir
       fi
 
-
       # (g)et from Box
       if [[ $arg == 'g' ]]; then
         echo "Get from Box"
