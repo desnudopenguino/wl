@@ -24,7 +24,7 @@ out=$(date +"%m/%d/%y")
 start=`calculateQuarter`
 out="$out\t$start\t"
 session=$(tmux list-pane -F '#S' | head -1)
-date=$(date +"%d_%m_%y")
+date=$(date +"%y_%m_%d")
 filename=~/"work_logs/$session-$date.csv"
 printf "$out" >> $filename
 echo "Start time: $start"
