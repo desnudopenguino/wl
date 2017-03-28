@@ -9,7 +9,7 @@ function newLog {
   filename=~/"work_logs/$session-$date.csv"
   touch $filename
   echo "$filename created..."
-  if [[ -e $1 ]]; then
+  if [[ -e $1 && $1 -ne $filename ]]; then
     echo "Joining $1 to $filename"
     joinLog $session-$date $1
     rm $1
