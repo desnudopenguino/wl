@@ -367,7 +367,13 @@ else
         session=$(tmux list-pane -F '#S' | head -1)
         date=$(date +"%y_%m_%d")
         filename=~/"work_logs/$session-$date.csv"
-        vim $filename
+        tail -n 1 $filename | grep '\n'
+        exit_val=$?
+        if [[ $exit_val == 0 ]]; then
+          vim $filename
+        else
+          vim +'set noendofline' +'set binary' $filename
+        fi
       fi
 
       # setup (r)emote directory structure
