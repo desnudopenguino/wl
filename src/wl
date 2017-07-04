@@ -108,6 +108,9 @@ function getStart {
 
 function getTime {
   typeset -i comment_length row
+  colWidth=`stty -a | grep 'columns' | awk -F ';' '{print $3}' | awk '{print $1}'`
+  typeset -i curWidth
+  curWidth=$colWidth-52
   if [[ -e $1 ]]; then
     file=$1
   else
@@ -123,7 +126,7 @@ function getTime {
   do
     comment_length=${#comments}
     if [[ ${#comments} -gt 50 ]]; then
-      comments=$(echo $comments | awk '{printf substr($0,1,47)}')"..."
+      comments=$(echo $comments | awk -v var="$curWidth" '{printf substr($0,1,var)}')"..."
     fi
     echo "$row\t$date\t$start\t$end\t$duration\t$comments"
     row=$row+1
@@ -332,7 +335,7 @@ else
       fi
 
       # Time for other log file
-      if [[ $arg == "t" ]]; then
+      if [[ $arg == 't' ]]; then
         getTime $2
       fi
 
