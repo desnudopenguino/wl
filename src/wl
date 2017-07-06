@@ -193,11 +193,12 @@ function calculateSeconds {
 function currentLog {
   start=`getStart`
   now=`date +"%H:%M"`
+  date=$(date +"%m/%d/%y")
   if [[ "$now" == 0* ]]; then
     now=${now#?}
   fi
   duration=`calculateDuration $start $now`
-  printf "Start:\tNow:\tTime Worked:\n$start\t$now\t$duration\n"
+  printf "\tDate:\t\tStart:\tNow:\tDur:\n\t$date\t$start\t$now\t$duration\n"
 }
 
 # get the total hours for this cur
@@ -379,9 +380,9 @@ else
         tail -n 1 $filename | grep '\n'
         exit_val=$?
         if [[ $exit_val == 0 ]]; then
-          vim $filename
+          vim +'set noexpandtab' $filename
         else
-          vim +'set noendofline' +'set binary' $filename
+          vim +'set noendofline' +'set binary' +'set noexpandtab' $filename
         fi
       fi
 
