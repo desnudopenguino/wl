@@ -257,12 +257,12 @@ function fullLog {
   mins=0
   while read date start end duration comments
   do
-    FS=$IFS
-    S=':'
-    t -A new_time $duration
-    S=$OIFS
-    s=$hrs+${new_time[0]}
-    ns=$mins+${new_time[1]}
+    OIFS=$IFS
+    IFS=':'
+    set -A new_time $duration
+    IFS=$OIFS
+    hrs=$hrs+${new_time[0]}
+    mins=$mins+${new_time[1]}
   done < "$file"
   calc_hrs=$mins/60
   calc_mins=$mins%60
