@@ -1,7 +1,7 @@
 # Makefile for wl script functionality
 # Run as root, needs to install into root-only locations
 all:
-	@echo "Run make rootinstall to install to /usr/local/bin\n or run make localinstall to install to your home directory"
+	@echo "Run make install-global to install to /usr/local/bin\n or run make install-user to install to your home directory"
 
 install-global:
 	@echo "Installing Required Packages..."
