@@ -3,7 +3,7 @@
 wl \- Work Logger. Allows for easy management of time tracking based on tmux sessions
 .SH SYNOPSIS
 .B wl
-[\fB-acNprstv\fR] [\fB-d \fImm/dd/yy(date)\fR] [\fB-f \fI"comment"\fR] [\fB-g \fIremote_file\fR] [\fB-i \fIlog_id\fR] [\fB-N \fIfile_name] [\fB-t \fIfile_name\fR]
+[\fB-acNprstvo\fR] [\fB-d \fImm/dd/yy(date)\fR] [\fB-f \fI"comment"\fR] [\fB-g \fIremote_file\fR] [\fB-i \fIlog_id\fR] [\fB-N \fIfile_name] [\fB-t \fIfile_name\fR]
 .SH DESCRIPTION
 .B wl
 is a set of ksh functions to easily manage a timesheet in terminal.
@@ -32,6 +32,9 @@ Print the full comment for a specific log entry.
 .TP
 .BR \-N " "[\fIfile_name\fR]
 Create a new log file. Including the [old file] will concatenate the old file to the new one.
+.TP
+.BR \-o\fr
+Build LaTeX file and export to pdf (requires texinfo)
 .TP
 .BR \-p\fR
 Puts the current log file to the remote source (currently configured to Box).
