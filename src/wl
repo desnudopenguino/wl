@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 # Time Tracker is a set of functions that can be implemented in ksh to keep
-# track of time spent working on a project. 
+# track of time spent working on a project.
 
 # create a new log file
 function newLog {
@@ -52,6 +52,44 @@ function stopLog {
   printf "$out" >> $filename
 }
 
+# create the pdf
+function generatePDF {
+    cd ~/"work_logs/.tex"
+    session=$(tmux list-pane -F '#S' | head -1)
+    tex_date=$(date +"%y-%m-%d")
+    wl_date=$(date +"%y_%m_%d")
+    wl_file=~/"work_logs/$session-$wl_date.csv"
+    tex_file=~/"work_logs/invoices/$session-$tex_date.tex"
+    dates=""
+    cat ~/"work_logs/.tex/$session-start.tex" > $tex_file
+    while read date start end duration comments
+    do
+        if [[ "$dates" == "${dates%"$date"*}" ]]
+        then
+            dates="$dates $date"
+        fi
+    done < "$wl_file"
+    for a in $dates
+    do
+        wl_line=$(wl -d $a)
+        typeset -i min calc_min multiplier
+        multiplier=100
+        hr=$(echo $wl_line | cut -d ' ' -f2 | cut -d ':' -f1)
+        min=$(echo $wl_line | cut -d ' ' -f2 | cut -d ':' -f2)
+        calc_min=min*100/60
+        calc_time="$hr.$calc_min"
+        echo "\hourrow{$(echo $wl_line | cut -d ':' -f1)}{$(echo $calc_time)}" >> $tex_file
+    done
+    cat ~/"work_logs/.tex/middle.tex" >> $tex_file
+    while read date start end duration comments
+    do
+        echo "$date & $start & $end & $duration & $comments"'\\\\' >> $tex_file
+        echo "\hline" >> $tex_file
+    done < "$wl_file"
+    cat ~/"work_logs/.tex/end.tex" >> $tex_file
+    texi2pdf $tex_file --pdf -o ~/"work_logs/invoices/$session-$tex_date.pdf"
+}
+
 # calculate the quarter for time (currently 15 mins, can be changed though
 function calculateQuarter {
   typeset -i hr min qtr rmnd calc_min calc_hr minimum middle
@@ -72,6 +110,8 @@ function calculateQuarter {
   if [[ $min_start == '0' ]]; then
     min_new=${arr[1]}
     min=${min_new#?}
+    typeset +i min
+    min="00"
   else
     min=${arr[1]}
   fi
@@ -85,10 +125,12 @@ function calculateQuarter {
   calc_hr=$hr
   if [[ $qtr -eq 0 ]]; then
     typeset -L calc_min
-    calc_min=00
+    typeset +i calc_min
+    calc_min="00"
   elif [[ $calc_min -eq 60 ]]; then
     typeset -L calc_min
-    calc_min=00
+    typeset +i calc_min
+    calc_min="00"
     calc_hr=$hr+1
   fi
   endTime="$calc_hr:$calc_min"
@@ -154,8 +196,8 @@ function calculateDuration {
   duration_mins=$duration_secs%3600/60
 
   if [[ $duration_mins -eq 0 ]]; then
-    typeset -L duration_mins
-    duration_mins=00
+    typeset -Z2 duration_mins
+    duration_mins="00"
   fi
 
   duration="$duration_hrs:$duration_mins"
@@ -215,13 +257,12 @@ function fullLog {
   mins=0
   while read date start end duration comments
   do
-  OIFS=$IFS
-  IFS=':'
-  set -A new_time $duration
-  IFS=$OIFS
-  hrs=$hrs+${new_time[0]}
-  mins=$mins+${new_time[1]}
-
+    FS=$IFS
+    S=':'
+    t -A new_time $duration
+    S=$OIFS
+    s=$hrs+${new_time[0]}
+    ns=$mins+${new_time[1]}
   done < "$file"
   calc_hrs=$mins/60
   calc_mins=$mins%60
@@ -306,7 +347,7 @@ function getItem {
 }
 
 # WRAPPER HERE
-# This part isn't a function, but will execute as one (hopefully) as the shell script is executed. 
+# This part isn't a function, but will execute as one (hopefully) as the shell script is executed.
 
 # check if file structure is set up
 if [[ ! -d "/home/`whoami`/work_logs/.archive" ]]; then
@@ -417,6 +458,11 @@ else
         localdir="/home/`whoami`/$dir"
         wl_box_put.expect $filename $localdir $dir
         echo "\n"
+      fi
+
+      # (o)utput to pdf
+      if [[ $arg == 'o' ]]; then
+        generatePDF
       fi
 
       # (a)rchive - add files to work_logs/.archive directory
