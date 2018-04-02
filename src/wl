@@ -378,7 +378,7 @@ else
       #separate flag logic
 
       # new log
-      if [[ $arg == 'N' ]]; then
+      if [[ $arg == 'i' ]]; then
         newLog $2
       fi
 
@@ -387,14 +387,13 @@ else
         getTime $2
       fi
 
-      # start the log
-      if [[ $arg == 's' ]]; then
+      # begin logging
+      if [[ $arg == 'b' ]]; then
         startLog
       fi
 
-      # stop the log
+      # stop logging
       if [[ $arg == 'f' ]]; then
-        #echo $2
         stopLog "$2"
       fi
 
@@ -404,7 +403,7 @@ else
       fi
 
       # get extended comments for an entry (i)tem
-      if [[ $arg == 'i' ]]; then
+      if [[ $arg == 'l' ]]; then
         getItem $2
       fi
 
