@@ -8,6 +8,7 @@ install-global:
 	@if [[ -z `whereis vim` ]]; then pkg_add vim; fi
 	@if [[ -z `whereis cadaver` ]]; then pkg_add cadaver; fi
 	@if [[ -z `whereis expect` ]]; then pkg_add expect; fi
+	@if [[ -z `whereis texi2dvi` ]]; then pkg_add texinfo; fi
 	@echo "Moving wl and helper scripts to /usr/local/bin/ ..."
 	@cp src/wl /usr/local/bin/
 	@cp src/wl_box* /usr/local/bin/
@@ -20,6 +21,7 @@ install-user:
 	@if [[ -z `whereis vim` ]]; then doas pkg_add vim; fi
 	@if [[ -z `whereis cadaver` ]]; then doas pkg_add cadaver; fi
 	@if [[ -z `whereis expect` ]]; then doas pkg_add expect; fi
+	@if [[ -z `whereis texi2dvi` ]]; then doas pkg_add texinfo; fi
 	@echo "Moving wl and helper scripts to ~/bin/ ..."
 	@if [[ ! -d /home/`whoami`/bin ]]; then mkdir /home/`whoami`/bin; fi
 	@cp src/wl /home/`whoami`/bin/
