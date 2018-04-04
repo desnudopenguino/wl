@@ -3,7 +3,7 @@
 wl \- Work Logger. Allows for easy management of time tracking based on tmux sessions
 .SH SYNOPSIS
 .B wl
-[\fB-acNprstvo\fR] [\fB-d \fImm/dd/yy(date)\fR] [\fB-f \fI"comment"\fR] [\fB-g \fIremote_file\fR] [\fB-i \fIlog_id\fR] [\fB-N \fIfile_name] [\fB-t \fIfile_name\fR]
+[\fB-acNprbtvo\fR] [\fB-d \fImm/dd/yy(date)\fR] [\fB-f \fI"comment"\fR] [\fB-g \fIremote_file\fR] [\fB-l \fIlog_id\fR] [\fB-b \fIfile_name] [\fB-t \fIfile_name\fR]
 .SH DESCRIPTION
 .B wl
 is a set of ksh functions to easily manage a timesheet in terminal.
@@ -27,10 +27,10 @@ End the current row in the time sheet with the current time (rounded to 15 minut
 .BR \-g\fR " "[\fIremote_file\fR]
 Gets the file from the remote source (currently configured to Box). If remote_file is included, gets that, and not the automated file.
 .TP
-.BR \-i\fR " "\fIlog_id\fR
+.BR \-l\fR " "\fIlog_id\fR
 Print the full comment for a specific log entry.
 .TP
-.BR \-N " "[\fIfile_name\fR]
+.BR \-i " "[\fIfile_name\fR]
 Create a new log file. Including the [old file] will concatenate the old file to the new one.
 .TP
 .BR \-o\fr
@@ -42,8 +42,8 @@ Puts the current log file to the remote source (currently configured to Box).
 .BR \-r\fR
 Initialize remote file structure (do this before trying to use remote service unless you have manually configured it)
 .TP
-.BR \-s\fR
-Start a new row in the time sheet with the current date and time (rounded to 15 minutes).
+.BR \-b\fR
+Begin a new row in the time sheet with the current date and time (rounded to 15 minutes).
 .TP
 .BR \-t\fR " "[\fIfile_name\fR]
 Print the current log (same action as wl without args), or file_name's log if it is entered.
