@@ -46,10 +46,7 @@ function stopLog {
 # create the pdf
 function generatePDF {
     cd ~/"work_logs/.tex"
-    session=$(tmux list-pane -F '#S' | head -1)
     tex_date=$(date +"%y-%m-%d")
-    wl_date=$(date +"%y_%m_%d")
-    wl_file=~/"work_logs/$session-$wl_date.csv"
     tex_file=~/"work_logs/invoices/$session-$tex_date.tex"
     dates=""
     cat ~/"work_logs/.tex/$session-start.tex" > $tex_file
@@ -59,7 +56,7 @@ function generatePDF {
         then
             dates="$dates $date"
         fi
-    done < "$wl_file"
+    done < "$filename"
     for a in $dates
     do
         wl_line=$(wl -d $a)
@@ -76,7 +73,7 @@ function generatePDF {
     do
         echo "$date & $start & $end & $duration & $comments"'\\\\' >> $tex_file
         echo "\hline" >> $tex_file
-    done < "$wl_file"
+    done < "$filename"
     cat ~/"work_logs/.tex/end.tex" >> $tex_file
     texi2pdf $tex_file --pdf -o ~/"work_logs/invoices/$session-$tex_date.pdf"
 }
@@ -333,6 +330,9 @@ function archiveSheet {
     rm -i $localdir/$session*
 }
 
+function loadLog {
+    filename="$1"
+}
 # WRAPPER HERE
 # This part isn't a function, but will execute as one (hopefully) as the shell script is executed.
 
@@ -353,7 +353,7 @@ date=$(date +"%y_%m_%d")
 # build wl filename
 filename=~/"work_logs/$session-$date.csv"
 
-while getopts "acd:ef:i:l:m:nsx" arg; do
+while getopts "acd:ef:i:l:m:nst:x" arg; do
     case $arg
     in
         a)
@@ -376,7 +376,7 @@ while getopts "acd:ef:i:l:m:nsx" arg; do
             getItem "$OPTARG"
             ;;
         l)
-            getTime "$OPTARG"
+            loadLog "$OPTARG"
             ;;
         m)
             mergeLog "$OPTARG"
@@ -386,6 +386,9 @@ while getopts "acd:ef:i:l:m:nsx" arg; do
             ;;
         s)
             startLog
+            ;;
+        t)
+            getTime "$OPTARG"
             ;;
         x)
             generatePDF
