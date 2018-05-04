@@ -50,7 +50,15 @@ function generatePDF {
     tex_date=$(date +"%y-%m-%d")
     tex_file=~/"work_logs/invoices/$session-$tex_date.tex"
     dates=""
-    cat ~/"work_logs/.tex/$session-start.tex" > $tex_file
+    cat ~/work_logs/.tex/start.tex > $tex_file
+    echo '\\tab'" $CLIENT_NAME \hfill "'\\\\' >> $tex_file
+    if [ -n "$CLIENT_LINE_1" ]; then
+        echo '\\tab'" $CLIENT_LINE_1 \hfill "'\\\\' >> $tex_file
+    fi
+    if [ -n "$CLIENT_LINE_2" ]; then
+        echo '\\tab'" $CLIENT_LINE_2 \hfill "'\\\\' >> $tex_file
+    fi
+    cat ~/"work_logs/.tex/top.tex" >> $tex_file
     while read date start end duration comments
     do
         if [[ "$dates" == "${dates%"$date"*}" ]]
