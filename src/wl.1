@@ -3,7 +3,7 @@
 wl \- Work Logger. Allows for easy management of time tracking based on tmux sessions
 .SH SYNOPSIS
 .B wl
-[\fB-acNprstvo\fR] [\fB-d \fImm/dd/yy(date)\fR] [\fB-f \fI"comment"\fR] [\fB-g \fIremote_file\fR] [\fB-i \fIlog_id\fR] [\fB-N \fIfile_name] [\fB-t \fIfile_name\fR]
+[\fB-acdefilmnstx\fR] [\fB-d \fImm/dd/yy(date)\fR] [\fB-f \fI"comment"\fR] [\fB-i \fIitem_number\fR] [\fB-l \fIfile_name\fR] [\fB-m \fIfile_name]
 .SH DESCRIPTION
 .B wl
 is a set of ksh functions to easily manage a timesheet in terminal.
@@ -13,48 +13,45 @@ directory.
 .SH OPTIONS
 .TP
 .BR \-a\fR
-Archive the current time sheet and remove all excess sheets locally and remotely (currently works with box's webdav with cadaver and expect installed).
+Archive the current time sheet and remove all excess sheets.
 .TP
 .BR \-c\fR
 Print current time block (last start in file to current time).
 .TP
-.BR \-d\fR " "[\fImm/dd/yy(date)\fR]
-Print the date and total time for a date. Prints today's stats if no date is included.
+.BR \-d\fR " "\fImm/dd/yy(date)\fR
+Print the date and total time for a date (mm/yy/dd format).
 .TP
-.BR \-f\fR " "[\fI"comment"\fR]
-End the current row in the time sheet with the current time (rounded to 15 minutes). If a comment is added, append that as well.
+.BR \-e\fR
+Edit the current work log in vi(m). Make sure to set end of line and binary options appropriately. when working with a current row open, or it will write the file with an EOL character, which will move the next finish input to the next row, making things ugly
 .TP
-.BR \-g\fR " "[\fIremote_file\fR]
-Gets the file from the remote source (currently configured to Box). If remote_file is included, gets that, and not the automated file.
+.BR \-f\fR " "\fI"comment"\fR
+Finish the current row in the time sheet with the current time (rounded to 15 minutes).
 .TP
 .BR \-i\fR " "\fIlog_id\fR
 Print the full comment for a specific log entry.
 .TP
-.BR \-N " "[\fIfile_name\fR]
-Create a new log file. Including the [old file] will concatenate the old file to the new one.
+.BR \-l\fR " "\fIfile_name\fR
+Load the file and work on that instead of the current session's file.
 .TP
-.BR \-o\fr
-Build LaTeX file and export to pdf (requires texinfo)
+.BR \-m\fR "\fIfile_name\fR
+Append file into the current sheet
 .TP
-.BR \-p\fR
-Puts the current log file to the remote source (currently configured to Box).
-.TP
-.BR \-r\fR
-Initialize remote file structure (do this before trying to use remote service unless you have manually configured it)
+.BR \-n\fR
+Create a new log file.
 .TP
 .BR \-s\fR
-Start a new row in the time sheet with the current date and time (rounded to 15 minutes).
+Begin a new row in the time sheet with the current date and time (rounded to 15 minutes).
 .TP
-.BR \-t\fR " "[\fIfile_name\fR]
+.BR \-t\fR " "\fIfile_name\fR
 Print the current log (same action as wl without args), or file_name's log if it is entered.
 .TP
-.BR \-v\fR
-Edit the current work log in vi(m). Make sure to set noeol and binary when working with a current row open, or it will write the file with an EOL character, which will move the next finish input to the next row, making things ugly
+.BR \-x\fr
+Build LaTeX file and export to pdf (requires texinfo)
 .TP
 .SH TODO
 .BR wl.conf
 contains any specific settings needed to customize the interaction for wl.
 This encompasses remote backup/saving, directory location, etc... It hasn't been set up yet, but is on the to do list
 
-Automate the -v option to know whether it is the end of the line or not (to set for writing)
+Automate the -e option to know whether it is the end of the line or not (to set for writing)
 
