@@ -45,6 +45,7 @@ function stopLog {
 
 # create the pdf
 function generatePDF {
+    . ~/work_logs/.tex/$session.conf
     cd ~/"work_logs/.tex"
     tex_date=$(date +"%y-%m-%d")
     tex_file=~/"work_logs/invoices/$session-$tex_date.tex"
@@ -66,7 +67,7 @@ function generatePDF {
         min=$(echo $wl_line | cut -d ' ' -f2 | cut -d ':' -f2)
         calc_min=min*100/60
         calc_time="$hr.$calc_min"
-        echo "\hourrow{$(echo $wl_line | cut -d ':' -f1)}{$(echo $calc_time)}" >> $tex_file
+        echo "\hourrow{$(echo $wl_line | cut -d ':' -f1)}{$(echo $calc_time)}{$( echo $HOURLY)}" >> $tex_file
     done
     cat ~/"work_logs/.tex/middle.tex" >> $tex_file
     while read date start end duration comments
