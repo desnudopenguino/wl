@@ -46,7 +46,7 @@ function stopLog {
 # create the pdf
 function generatePDF {
     . ~/work_logs/.tex/$session.conf
-    cd ~/"work_logs/.tex"
+    cd ~/work_logs/.tex
     tex_date=$(date +"%y-%m-%d")
     tex_file=~/"work_logs/invoices/$session-$tex_date.tex"
     dates=""
@@ -59,6 +59,7 @@ function generatePDF {
         echo '\\tab'" $CLIENT_LINE_2 \hfill "'\\\\' >> $tex_file
     fi
     cat ~/"work_logs/.tex/top.tex" >> $tex_file
+    echo '\\feetype'"{$FEE_TYPE}" >> $tex_file
     while read date start end duration comments
     do
         if [[ "$dates" == "${dates%"$date"*}" ]]
