@@ -7,7 +7,7 @@ install-global:
 	@echo "Moving wl and helper scripts to /usr/local/bin/ ..."
 	@cp src/wl /usr/local/bin/
 	@cp src/wl_box* /usr/local/bin/
-	@echo "Setting up WL file structure (~/work_logs)
+	@echo "Setting up WL file structure (~/work_logs)"
 	@mkdir /home/`whoami`/work_logs
 	@cp -R tex /home/`whoami`/work_logs/.tex
 	@echo "Moving wl man page to /usr/local/man/man1/ ..."
@@ -19,7 +19,7 @@ install-user:
 	@if [[ ! -d /home/`whoami`/bin ]]; then mkdir /home/`whoami`/bin; fi
 	@cp src/wl /home/`whoami`/bin/
 	@cp src/wl_box* /home/`whoami`/bin/
-	@echo "Setting up WL file structure (~/work_logs)
+	@echo "Setting up WL file structure (~/work_logs)"
 	@mkdir /home/`whoami`/work_logs
 	@cp -R tex /home/`whoami`/work_logs/.tex
 	@echo "Done!"
