@@ -32,3 +32,6 @@ This script is written in POSIX sh and based in OpenBSD (as well as the makefile
     `wl -x`
 5. ???
 6. Profit!
+
+## Notes
+The invoice tex and cls files were found at [LaTeX Templates](https://www.latextemplates.com/template/invoice).
