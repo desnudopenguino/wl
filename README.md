@@ -6,7 +6,8 @@ This script is written in POSIX sh and based in OpenBSD (as well as the makefile
 ## Installation
 1.  `git clone https://github.com/desnudopenguino/wl.git`
 2. `cd wl`
-3. `make`
+3. `make local` - install the script to your local (~/bin/) directory
+4. `make init` - initialize your local filesystem (~/work_logs)
 
 ## Dependencies
 * [tmux](https://github.com/tmux/tmux.git) - this is how the work logs are more or less managed.
