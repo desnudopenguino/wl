@@ -332,10 +332,9 @@ function editSheet {
 function archiveSheet {
     echo "Archiving $filename..."
     dir="work_logs"
-    current=~/"$dir/$filename"
     archive=~/"$dir/.archive/"
     localdir="/home/`whoami`/$dir"
-    mv $current $archive
+    mv $filename $archive
     echo "Cleaning up other $session logs..."
     rm -i $localdir/$session*
 }
