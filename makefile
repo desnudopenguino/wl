@@ -18,7 +18,7 @@ local:
 
 init:
 	@echo "Setting up WL file structure (~/work_logs)"
-	@mkdir /home/`whoami`/work_logs/{.tex,invoices}
+	@mkdir -p /home/`whoami`/work_logs/{.tex,invoices}
 	@cp -R tex /home/`whoami`/work_logs/.tex
 	@echo "Done!"
 
