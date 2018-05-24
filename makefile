@@ -7,8 +7,6 @@ global:
 	@echo "Moving wl and helper scripts to /usr/local/bin/ ..."
 	@cp src/wl /usr/local/bin/
 	@cp src/wl_box* /usr/local/bin/
-	@echo "Moving wl man page to /usr/local/man/man1/ ..."
-	@cp src/wl.1 /usr/local/man/man1/
 	@echo "Done!"
 
 local:
@@ -20,7 +18,7 @@ local:
 
 init:
 	@echo "Setting up WL file structure (~/work_logs)"
-	@mkdir /home/`whoami`/work_logs
+	@mkdir /home/`whoami`/work_logs/{.tex,invoices}
 	@cp -R tex /home/`whoami`/work_logs/.tex
 	@echo "Done!"
 
