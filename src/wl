@@ -26,6 +26,15 @@ printf "$out" >> $filename
 echo "Start time: $start"
 }
 
+# recompile without editing the tex file
+function recompile {
+    cd ~/work_logs/.tex
+    tex_date=$(date +"%y-%m-%d")
+    tex_file=~/"work_logs/invoices/$session-$tex_date.tex"
+    texi2pdf $tex_file --pdf -o ~/"work_logs/invoices/$session-$tex_date.pdf"
+    xpdf ~/"work_logs/invoices/$session-$tex_date.pdf" &
+}
+
 # append the end time, time worked, and comments to the current work line
 function stopLog {
   end=`calculateQuarter`
@@ -363,7 +372,7 @@ date=$(date +"%y_%m_%d")
 # build wl filename
 filename=~/"work_logs/$session-$date.csv"
 
-while getopts "acd:ef:i:l:m:nst:x" arg; do
+while getopts "acd:ef:i:l:m:nrst:x" arg; do
     case $arg
     in
         a)
@@ -393,6 +402,9 @@ while getopts "acd:ef:i:l:m:nst:x" arg; do
             ;;
         n)
             newLog
+            ;;
+        r)
+            recompile
             ;;
         s)
             startLog
