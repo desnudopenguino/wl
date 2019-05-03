@@ -86,6 +86,7 @@ function generatePDF {
     done < "$filename"
     cat ~/"work_logs/.tex/end.tex" >> $tex_file
     texi2pdf $tex_file --pdf -o ~/"work_logs/invoices/$session-$tex_date.pdf"
+    xpdf ~/"work_logs/invoices/$session-$tex_date.pdf" &
 }
 
 # calculate the quarter for time (currently 15 mins, can be changed though
