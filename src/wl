@@ -352,6 +352,22 @@ function archiveSheet {
 function loadLog {
     filename="$1"
 }
+
+function postMail {
+    . ~/work_logs/.tex/.conf
+    . ~/work_logs/.tex/$session.conf
+    tex_date=$(date +"%y-%m-%d")
+    localdir="/home/`whoami`/work_logs"
+    invoicedir="$localdir/invoices"
+    sentdir="$invoicedir/sent"
+    pdf="$invoicedir/$session-$tex_date.pdf"
+    echo "Sending $pdf to $CLIENT_NAME($CLIENT_EMAIL)"
+    /usr/local/bin/curl --user "api:$MAILGUN_KEY" -F from="$COMPANY_EMAIL" -F to="$CLIENT_EMAIL" -F bcc="$MY_EMAIL" -F subject="Invoice for $CLIENT_NAME" -F template="$MAILGUN_TEMPLATE" -F attachment="@$pdf" https://api.mailgun.net/v3/$MAILGUN_URL/messages
+    # below works, waiting to get the send with an attachment to work properly
+    echo "Moving files into sent directory"
+    mv $invoicedir/$session-$tex_date* $invoicedir/sent/
+}
+
 # WRAPPER HERE
 # This part isn't a function, but will execute as one (hopefully) as the shell script is executed.
 
@@ -372,7 +388,7 @@ date=$(date +"%y_%m_%d")
 # build wl filename
 filename=~/"work_logs/$session-$date.csv"
 
-while getopts "acd:ef:i:l:m:nrst:x" arg; do
+while getopts "acd:ef:i:l:m:nprst:x" arg; do
     case $arg
     in
         a)
@@ -402,6 +418,9 @@ while getopts "acd:ef:i:l:m:nrst:x" arg; do
             ;;
         n)
             newLog
+            ;;
+        p)
+            postMail
             ;;
         r)
             recompile
