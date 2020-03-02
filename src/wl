@@ -367,7 +367,7 @@ function postMail {
     sentdir="$invoicedir/sent"
     pdf="$invoicedir/$session-$tex_date.pdf"
     echo "Sending $pdf to $CLIENT_NAME($CLIENT_EMAIL)"
-    /usr/local/bin/curl --user "api:$MAILGUN_KEY" -F from="$COMPANY_EMAIL" -F to="$CLIENT_EMAIL" -F bcc="$MY_EMAIL" -F subject="Invoice for $CLIENT_NAME" -F template="$MAILGUN_TEMPLATE" -F attachment="@$pdf" https://api.mailgun.net/v3/$MAILGUN_URL/messages
+    /usr/local/bin/curl --user "api:$MAILGUN_KEY" -F from="$COMPANY_EMAIL" -F to="$CLIENT_EMAIL" -F bcc="$MY_EMAIL" -F h:Reply-To="$MY_EMAIL" -F subject="Invoice for $CLIENT_NAME" -F template="$MAILGUN_TEMPLATE" -F attachment="@$pdf" https://api.mailgun.net/v3/$MAILGUN_URL/messages
     # below works, waiting to get the send with an attachment to work properly
     echo "Moving files into sent directory"
     mv $invoicedir/$session-$tex_date* $invoicedir/sent/
